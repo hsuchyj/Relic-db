@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.sideBlue 
+{
+    height: 100%; 
+    width: 80px; 
+    position: absolute; 
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #00539f; 
+    overflow-x: hidden; 
+    padding-top: 20px;
+}
+
+.searchStyle
+{
+	display:none;
+	position: relative;
+	top:100px;
+    bottom: 200px;
+	left:400px;
+	z-index:3;
+}
+
+.tab
+{
+
+	border: none;
+	border-radius: 8px;
+	background-color: white;
+	display: inline-block;
+	font-size: 18px;
+	left:90px;
+	padding: 5px 30px 5px 5px;
+	position: absolute;
+	text-align: left;
+	z-index:2;
+}
+
+.searchTab
+{
+top:90px;
+}
+
+.importTab
+{
+top:140px;
+}
+
+.tabHover:hover
+{
+	background-color: #f2f2f2;
+}
+
+.answers
+{
+	font-size: 16px;
+	font-family:Arial;
+}
+
+
+
+
+</style>
+<meta charset="UTF-8">
+<title>Title of the document</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+function showQuestions()
+{
+	
+}
+
+$(document).ready(function(e) {
+var $form = $('#searchBar');
+$form.submit(function(e){
+e.preventDefault();
+
+   $.ajax({
+		type: 'POST',
+		url:$form.attr('action'),
+		data:$form.serialize(),
+		dataType:'json',
+       success:
+	   function(response)
+       {
+			var result ="";
+			var ansCount = 'a';
+			  console.log(response);
+			  $.each(response, function(){
+				$result+= "<p>",questionText,"</p><br>";
+					$.each(answers, function(){
+						result+="<pre class = 'answers'>         ",ansCount,") ",answers.text,"</pre>"
+					}
+			  }
+              $("#responseDiv").html(result);
+       }
+    });
+	return false;
+});
+
+});
+</script>
+</head>
+
+
+
+<body>
+<div class="sideBlue">
+</div>
+
+<button onclick = "chooseDisplay(this.id)" class = "tab searchTab tabHover" id = "search">
+Search
+</button>
+
+<button onclick = "chooseDisplay(this.id)" class = "tab importTab tabHover" id = "import">
+Import
+</button>
+
+<script>
+function chooseDisplay(click_id) {
+    var searchElements = document.getElementsByClassName("tabPage");
+	console.log(click_id);
+	for(var i=0; i<searchElements.length; i++) 
+	{	
+		//checks to see if tab open matches elements open
+		if(searchElements[i].classList.contains(click_id))
+		{
+			searchElements[i].style.display = "block";
+		}
+		else
+		{
+			searchElements[i].style.display = "none";
+		}
+	}
+	
+}
+</script>
+
+<form action = "search.php" class= "searchStyle tabPage search" id = "searchBar" method = "post">
+  Question keyword search:<input name="search" type="text">
+  <button name = "button" type = "submit">search</button>
+</form>
+
+<div id="responseDiv" class= "searchStyle tabPage search"></div>
+<div id="importPage" class= "searchStyle tabPage import"><h1>import questions from canvas!</h1></div>
+</body>
+
+</html>
