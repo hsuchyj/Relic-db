@@ -7,8 +7,9 @@ $collection = $db->questions;
 
 class Question
 {
+	public $questionId;
 	public $questionText;
-	public $answers;
+	public $answers = array();
 }
 
 if(!empty($_POST["search"]))
@@ -25,17 +26,18 @@ if(!empty($_POST["search"]))
 		$question = new Question();
     // do something to each document
 	#make question a variable
+		$question->questionId = $doc->id;
 		$question->questionText = $doc->question_text;
 		#echo $doc->question_text;
 		#$ansCount= 'a';
-		$question->answers = $doc["answers"];
-		#foreach($doc["answers"] as $answer)
-		#{
-			#tab spacing for answers for readibility
+		#$question->answers = $doc["answers"];
+		foreach($doc["answers"] as $answer)
+		{
+			#transfers array of text to objects array
+			array_push($question->answers, $answer["text"]);
 			#echo "<pre class = 'answers'>         ",$ansCount,") ",$answer["text"],"</pre>";
-			#new line for answers
-			#$ansCount++;		
-		#}
+				
+		}
 		array_push($resultQuestions,$question);
 }
 	echo json_encode($resultQuestions);
