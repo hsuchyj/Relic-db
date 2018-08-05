@@ -17,7 +17,7 @@ from tkinter import *
 def mainPage():
     return render_template("searchBar.html")
 
-@bp.route("/import")
+@app.route("/import")
 def importQuestions():
     client = MongoClient('localhost', 27017)
     db = client['relic']
