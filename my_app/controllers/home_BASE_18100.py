@@ -1,4 +1,5 @@
-
+from flask import Blueprint, render_template, redirect, request, make_response 
+from ..app import add_blueprint
 import json
 from ..config import settings
 from os.path import join
@@ -12,19 +13,19 @@ from pymongo import MongoClient
 from tkinter import filedialog
 from tkinter import *
 
-@app.route("/home")
+bp = Blueprint('home', __name__)
+
+@bp.route("/home")
 def mainPage():
     return render_template("searchBar.html")
 
-
-#add param for different lti i.e. canvas, respondus etc
-@app.route("/import")
+@bp.route("/import")
 def importQuestions():
     client = MongoClient('localhost', 27017)
+    db = client['relic']
+    questions = db['questions']
 
-
-    #user selects file from gui
-    
+    #user selects
     root = Tk()
     root.filename = filedialog.askopenfilename(initialdir = "/",title = "Select file")
     xmlLoc = root.filename
@@ -40,3 +41,5 @@ def importQuestions():
 
     #questions.insert(newDoc)
     #client.close()
+        
+add_blueprint(bp)

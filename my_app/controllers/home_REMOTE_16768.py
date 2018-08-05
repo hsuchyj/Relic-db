@@ -1,4 +1,5 @@
-
+from flask import render_template, redirect, request, make_response
+from run_server import app
 import json
 from ..config import settings
 from os.path import join
@@ -16,15 +17,13 @@ from tkinter import *
 def mainPage():
     return render_template("searchBar.html")
 
-
-#add param for different lti i.e. canvas, respondus etc
 @app.route("/import")
 def importQuestions():
     client = MongoClient('localhost', 27017)
+    db = client['relic']
+    questions = db['questions']
 
-
-    #user selects file from gui
-    
+    #user selects
     root = Tk()
     root.filename = filedialog.askopenfilename(initialdir = "/",title = "Select file")
     xmlLoc = root.filename
