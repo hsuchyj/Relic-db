@@ -20,12 +20,14 @@ def mainPage():
     return render_template("searchBar.html")
 
 @bp.route("/import")
+#add param for different lti i.e. canvas, respondus etc
 def importQuestions():
     client = MongoClient('localhost', 27017)
     db = client['relic']
     questions = db['questions']
 
-    #user selects
+    #user selects file from gui
+    
     root = Tk()
     root.filename = filedialog.askopenfilename(initialdir = "/",title = "Select file")
     xmlLoc = root.filename
