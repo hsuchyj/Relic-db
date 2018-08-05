@@ -15,7 +15,7 @@ def setup_logging(logging_path, level):
     from logging import getLogger, getLevelName
     file_handler = RotatingFileHandler(logging_path)
     file_handler.setLevel(getLevelName(level))
-    loggers = [app.logger, getLogger('sqlalchemy')]
+    loggers = [app.logger]
     for logger in loggers:
         logger.addHandler(file_handler)
 
