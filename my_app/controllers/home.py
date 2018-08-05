@@ -41,6 +41,7 @@ def importQuestions():
 
         # questions.insert(newDoc)
         # client.close()
+    print("imported stuff")
 
 def setup_logging(logging_path, level):
     '''Setups logging in app'''

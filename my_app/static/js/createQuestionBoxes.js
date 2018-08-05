@@ -32,10 +32,8 @@ function makeDivs(total)
 						});
 						document.body.appendChild(clearDiv);
 					}
-
 				}
 }
-
 
 //gets rid of excess divs on new search if too many
 function eraseDivs(curr, total)
@@ -93,10 +91,7 @@ function checkColor(count, quesId)
 			color = "#ccffb3";
 		}
 	}
-	
 	cDiv.style.backgroundColor=color;
-	}
-	
 }
 
 function checkArray(idName, qId)
