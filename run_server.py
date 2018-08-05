@@ -3,10 +3,9 @@ from my_app.config import settings, assets
 from flask import Flask
 
 # set up the flask app
-APP_NAME = 'my_app'
 
-app = Flask(APP_NAME, static_folder=settings.STATIC_FOLDER,
-            template_folder=settings.TEMPLATE_FOLDER)
+app = Flask(__name__, static_folder= "my_app/static",
+            template_folder="my_app/templates")
 assets.init_assets(app)
 
 
