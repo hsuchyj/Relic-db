@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, redirect, request, make_response 
-from ..app import add_blueprint
+from flask import render_template, redirect, request, make_response
+from run_server import app
 import json
 from ..config import settings
 from os.path import join
@@ -13,9 +13,7 @@ from pymongo import MongoClient
 from tkinter import filedialog
 from tkinter import *
 
-bp = Blueprint('home', __name__)
-
-@bp.route("/home")
+@app.route("/home")
 def mainPage():
     return render_template("searchBar.html")
 
@@ -41,5 +39,3 @@ def importQuestions():
 
     #questions.insert(newDoc)
     #client.close()
-        
-add_blueprint(bp)
