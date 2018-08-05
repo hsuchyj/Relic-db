@@ -29,7 +29,6 @@ def importQuestions():
     root = Tk()
     root.filename = filedialog.askopenfilename(initialdir = "/",title = "Select file")
     xmlLoc = root.filename
-    #'C:\\Users\\OG AppleJacks\\Documents\\cisc106rework\\staging-mattsap-quiz-export\\i682d359907261533e3507b8d0b191d73\\i682d359907261533e3507b8d0b191d73.xml'
     with open(xmlLoc, encoding='UTF-8') as fd:
         doc = xmltodict.parse(fd.read())
         jsonDoc = json_util.loads(json.dumps(doc))
