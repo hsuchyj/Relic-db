@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1048d315-ca24-461a-8a5b-b0b692760b56" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/my_app/controllers/home.py" beforeDir="false" afterPath="$PROJECT_DIR$/my_app/controllers/home.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_app/static/js/ajaxForAutocomplete.js" beforeDir="false" afterPath="$PROJECT_DIR$/my_app/static/js/ajaxForAutocomplete.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/my_app/templates/searchBar.html" beforeDir="false" afterPath="$PROJECT_DIR$/my_app/templates/searchBar.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,16 +40,16 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Python Console" value="22" />
-          <entry key="html" value="785" />
-          <entry key="js" value="409" />
-          <entry key="py" value="1638" />
+          <entry key="html" value="987" />
+          <entry key="js" value="505" />
+          <entry key="py" value="1744" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="785" />
-          <entry key="JavaScript" value="409" />
-          <entry key="Python" value="1660" />
+          <entry key="HTML" value="987" />
+          <entry key="JavaScript" value="505" />
+          <entry key="Python" value="1766" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -68,23 +70,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/my_app/templates/searchBar.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="57" column="33" lean-forward="true" selection-start-line="57" selection-start-column="33" selection-end-line="57" selection-end-column="33" />
+            <state relative-caret-position="396">
+              <caret line="18" column="9" lean-forward="true" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/my_app/controllers/home.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="64" column="36" lean-forward="true" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="36" />
+            <state relative-caret-position="330">
+              <caret line="42" column="33" selection-start-line="42" selection-start-column="33" selection-end-line="42" selection-end-column="33" />
               <folding>
                 <element signature="e#1#12#0" expanded="true" />
-                <marker date="1533673068125" expanded="true" signature="1993:1995" ph="..." />
+                <marker date="1533687451307" expanded="true" signature="1800:1802" ph="..." />
               </folding>
             </state>
           </provider>
@@ -94,7 +96,7 @@
         <entry file="file://$PROJECT_DIR$/my_app/static/js/ajaxForAutocomplete.js">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="2" lean-forward="true" selection-start-column="2" selection-end-column="2" />
+              <caret column="40" selection-start-column="40" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -145,8 +147,8 @@
       <list>
         <option value="$PROJECT_DIR$/my_app/static/js/createQuestionBoxes.js" />
         <option value="$PROJECT_DIR$/my_app/static/js/ajaxForAutocomplete.js" />
-        <option value="$PROJECT_DIR$/my_app/controllers/home.py" />
         <option value="$PROJECT_DIR$/my_app/templates/searchBar.html" />
+        <option value="$PROJECT_DIR$/my_app/controllers/home.py" />
       </list>
     </option>
   </component>
@@ -156,7 +158,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="952" />
     <option name="width" value="977" />
     <option name="height" value="1038" />
@@ -329,13 +331,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/my_app/static/js/createQuestionBoxes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="148" column="12" lean-forward="true" selection-start-line="148" selection-start-column="12" selection-end-line="148" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/my_app/static/js/ajaxForQuestionBoxes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -343,28 +338,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/my_app/static/js/ajaxForAutocomplete.js">
+    <entry file="file://$PROJECT_DIR$/my_app/static/js/createQuestionBoxes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="2" lean-forward="true" selection-start-column="2" selection-end-column="2" />
+        <state relative-caret-position="366">
+          <caret line="148" column="12" lean-forward="true" selection-start-line="148" selection-start-column="12" selection-end-line="148" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/my_app/controllers/home.py">
+    <entry file="file://$PROJECT_DIR$/my_app/static/js/ajaxForAutocomplete.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="64" column="36" lean-forward="true" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="36" />
-          <folding>
-            <element signature="e#1#12#0" expanded="true" />
-            <marker date="1533673068125" expanded="true" signature="1993:1995" ph="..." />
-          </folding>
+        <state>
+          <caret column="40" selection-start-column="40" selection-end-column="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/my_app/templates/searchBar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="57" column="33" lean-forward="true" selection-start-line="57" selection-start-column="33" selection-end-line="57" selection-end-column="33" />
+        <state relative-caret-position="396">
+          <caret line="18" column="9" lean-forward="true" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my_app/controllers/home.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="42" column="33" selection-start-line="42" selection-start-column="33" selection-end-line="42" selection-end-column="33" />
+          <folding>
+            <element signature="e#1#12#0" expanded="true" />
+            <marker date="1533687451307" expanded="true" signature="1800:1802" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

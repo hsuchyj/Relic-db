@@ -49,19 +49,11 @@ def getTagsFromDB():
     client = MongoClient('localhost', 27017)
     db = client['relic']
     tags = db['tags']
-    print("db connects to tag")
-    print(request.args.get('tagFilter'))
-    #select = request.args.get("tagFilter")
     select = request.args.get('tagFilter')
-    #print(select)
-    print("get filters from form")
-    tagData = tags.find({select:"function"})
+    #have to change 'function' to whatever the first entry for that tag is
+    tagData = tags.find({select:{'$exists':True}})
     for items in tagData:
         tagList = items[select]
-    #print(arr)
-    for items in tagList:
-        print(items)
-    #results = json_util.loads(tagData)
     return jsonify(result = tagList)
 
 
