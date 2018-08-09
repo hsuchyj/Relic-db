@@ -10,6 +10,12 @@
     padding-top: 20px;
 }
 
+.ui-autocomplete
+{
+    position:absolute;
+    cursor:default;
+    z-index:1001
+}
 .tab
 {
 

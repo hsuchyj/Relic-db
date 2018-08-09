@@ -35,30 +35,37 @@ Import
 
 <form method = 'GET' id = "tagFilterForm" class = "searchStyle tabPage search">
 <select name="tagFilter" id="tagFilter">
-    <option value = "Unit" selected="selected">Unit</option>
-    <option value  = "UnitSLO">Unit SLO</option>
-    <option value	= "Skill">Skill</option>
-    <option value = "SkillSLO">Skill SLO</option>
+    <option value = "units" selected="selected">Unit</option>
+    <option value  = "unit_slos">Unit SLO</option>
+    <option value	= "skills">Skill</option>
+    <option value = "skill_slos">Skill SLO</option>
 </select>
-     <input id = "tagSearch" type = "text" onkeyup = "ajaxForAutocomplete()">
+     <input id = "tagSearch" type = "text">
 </form>
 
 
 <script>
-$("#tagSearch").keyup(function(){
-    var text = $(this).val();
+$("#tagSearch").keyup(function() {
+    var searchtext = $("#tagSearch").val();
     var tagfilter = $("#tagFilter").val();
-
     $.ajax({
       url: "/getTagsFromDB",
-      type: "get",
-      data: {ACtext: text, tagFilter: tagfilter},
+      type: "POST",
+      async: false, //https://stackoverflow.com/questions/40658172/alternative-to-async-false-for-successive-ajax-calls
+      data: JSON.stringify({"tag_level":tagfilter, "search_text":searchtext}),
+      dataType: "json",
+      contentType: "application/json; charset=utf-8",
       success: function(result) {
-          arr = result['result'];
-          $( "#tagSearch" ).autocomplete({source:arr});
+          $("#tagSearch" ).autocomplete({source:result["tags"]});
       }
-    });
-});
+    })
+
+
+
+  });
+
+
+
 </script>
 
 <div id="importPage" class= "searchStyle tabPage import"><h1>import questions from canvas!</h1></div>

@@ -1,4 +1,4 @@
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, abort
 from run_server import app
 import my_app.controllers.dataAccess as dataAccess
 
@@ -11,9 +11,15 @@ def mainPage():
 def importQuestions():
     return dataAccess.importQuestions()
 
-@app.route("/getTagsFromDB", methods = ["GET"])
+@app.route("/getTagsFromDB", methods = ["POST"])
 def getTagsFromDB():
-    return dataAccess.getTags()
+    if not request.json:
+        abort(400)
+    tag_level =  request.json.get("tag_level","")
+    search_text = request.json.get("search_text","")
+    tags = dataAccess.getTags(tag_level, search_text)
+    return jsonify({'status': "success", "tags": tags})
+
 
 
 

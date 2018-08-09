@@ -36,7 +36,8 @@ def importQuestions():
     print("imported stuff")
     """
 
-def getTags():
+def getTags(tag_level, search_text):
+   #tag_level is either units, unit_slos, skills, skill_slos
     """
     client = MongoClient('localhost', 27017)
     db = client['relic']
@@ -48,33 +49,21 @@ def getTags():
         tagList = items[select]
     return jsonify(result = tagList)
     """
-    return {
-   "units":[
-      {
-         "unit_name":"Simple Python Data",
-         "unit_SLO":"Write a script/program that asks a user for input values from the keyboard, performs a mathematical computation and displays the result to the screen.",
-         "topics":[
-            "operators",
-            "variables"
-         ],
-         "skills":[
-            {
-               "skill_name":"algorithms",
-               "skill_slos":[
-                  "write algorithm for solving simple mathematical problems",
-                  "understand the difference between an algorithm and a program"
-               ]
-            },
-            {
-               "skill_name":"operators",
-               "skill_slos":[
-                  "evaluate expressions containing these operators",
-                  "understand the difference beween floating point and integer division",
-                  "convert a mathematical formula into a Python expression"
-               ]
-            }
-         ]
-      }
-   ]
-}
+    #replace with call from db
+    data =  {"units":[{"unit_name":"Simple Python Data","unit_SLO":"Write a script/program that asks a user for input values from the keyboard, performs a mathematical computation and displays the result to the screen.","topics":["operators","variables"],"skills":[{"skill_name":"algorithms","skill_slos":["write algorithm for solving simple mathematical problems","understand the difference between an algorithm and a program"]},{"skill_name":"operators","skill_slos":["evaluate expressions containing these operators","understand the difference between floating point and integer division","convert a mathematical formula into a Python expression"]}]}]}
+    if tag_level == "units":
+       results = [unit.get("unit_name","") for unit in data.get("units", []) ]
+    elif tag_level == "unit_slos":
+       results= [unit.get("unit_SLO", "") for unit in data.get("units", [])]
+    elif tag_level == "skills":
+       results= [skill.get("skill_name", "") for unit in data.get("units", []) for skill in unit.get("skills", {})]
+    elif tag_level == "skill_slos":
+       results = []
+       for unit in data.get("units", []):
+          for skill in unit.get("skills", []):
+             for skill_slo in skill.get("skill_slos", []):
+                results.append(skill_slo)
+    else:
+       results = ["Error"]
+    return list(filter(lambda text: search_text.lower() in text.lower(), results))
 
