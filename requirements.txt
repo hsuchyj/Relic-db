@@ -1,5 +1,3 @@
 Flask
 Flask-Assets
-SQLAlchemy
-slimish-jinja
 pathlib
