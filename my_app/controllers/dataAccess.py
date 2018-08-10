@@ -38,6 +38,7 @@ def importQuestions():
 
 def getTags(tag_level, search_text):
    #tag_level is either units, unit_slos, skills, skill_slos
+   #search_text is the user's response (e.g. "the") Need to return all units/sklls/etc with "the" inside.
     """
     client = MongoClient('localhost', 27017)
     db = client['relic']

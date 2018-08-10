@@ -9,7 +9,10 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../static/js/ajaxForAutocomplete.js"></script>
     <script src="../static/js/createQuestionBoxes.js"></script>
-
+    <script src= "../static/js/searchTags.js"></script>
+    <script>
+        var restrictions = {"units":[], "unit_slos":[], "skills":[], "skill_slos":[]};
+    </script>
 </head>
 
 <body>
@@ -33,39 +36,55 @@ Import
   <input type="submit" value = "Import">
 </form>
 
-<form method = 'GET' id = "tagFilterForm" class = "searchStyle tabPage search">
-<select name="tagFilter" id="tagFilter">
-    <option value = "units" selected="selected">Unit</option>
-    <option value  = "unit_slos">Unit SLO</option>
-    <option value	= "skills">Skill</option>
-    <option value = "skill_slos">Skill SLO</option>
-</select>
-     <input id = "tagSearch" type = "text">
-</form>
+<table class = "searchStyle tabPage search">
+    <tr>
+        <td>
+            <input id ="tagQuantity" type="text">
+        </td>
+        <td>
+
+            <select name="tagFilter" id="tagFilter">
+                <option value = "units" selected="selected">Unit</option>
+                <option value  = "unit_slos">Unit SLO</option>
+                <option value	= "skills">Skill</option>
+                <option value = "skill_slos">Skill SLO</option>
+            </select>
+        </td>
+        <td>
+            <input id = "tagSearch" type = "text">
+        </td>
+        <td>
+            <button id="addTag" onclick="updateRestrictions()" class="tabHover">Add Tag</button>
+        </td>
+    </tr>
+</table>
+
+<table class = "searchStyle tabPage search" id="tagRequirements">
+
+</table>
+
 
 
 <script>
+
+
 $("#tagSearch").keyup(function() {
     var searchtext = $("#tagSearch").val();
     var tagfilter = $("#tagFilter").val();
     $.ajax({
       url: "/getTagsFromDB",
       type: "POST",
-      async: false, //https://stackoverflow.com/questions/40658172/alternative-to-async-false-for-successive-ajax-calls
       data: JSON.stringify({"tag_level":tagfilter, "search_text":searchtext}),
-      dataType: "json",
       contentType: "application/json; charset=utf-8",
+      dataType: "json",
       success: function(result) {
           $("#tagSearch" ).autocomplete({source:result["tags"]});
-      }
+      },
+      failure: function(errMsg) {
+                alert(errMsg);
+            }
     })
-
-
-
   });
-
-
-
 </script>
 
 <div id="importPage" class= "searchStyle tabPage import"><h1>import questions from canvas!</h1></div>
