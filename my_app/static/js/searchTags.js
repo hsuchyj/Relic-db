@@ -6,12 +6,14 @@ function updateRestrictions(){
     var tagText = $("#tagSearch").val();
     var tagQuantity = $("#tagQuantity").val()
     var tagDifficulty = $("#tagDifficulty").val()
+    var isCreatingExamTemplate  = $("#tagDifficulty").val() == "examTemplate";
+
 
     if(tagText.length == 0 ){//just a simple user case check to not add empty strings
         alert("check tag description");
         return;
     }
-    if(tagQuantity.length == 0){
+    if(tagQuantity.length == 0 && isCreatingExamTemplate){
         alert("check quantity of questions");
         return;
     }
@@ -27,6 +29,7 @@ function updateRestrictions(){
     //Create the restriction table row
     var row = table.insertRow(-1);
     var rowIndex = row.rowIndex;
+
 
     var tagQuantityCell = row.insertCell(0); //<label>quantity</label>
     var tagDifficultyCell = row.insertCell(1);//<label>quantity</label>
@@ -68,7 +71,7 @@ function updateRestrictions(){
         updateDisplayedQuestions();
     });
     //add restriction
-    restrictions[rowIndex] = {"tag":tagText, "num":tagDifficulty, "difficulty":tagDifficulty}
+    restrictions[rowIndex] = {"tag":tagText, "num":tagQuantity, "difficulty":tagDifficulty}
     removeButtonCell.appendChild(removeButton);
     updateDisplayedQuestions();
 };
@@ -88,13 +91,7 @@ function updatePossibilities(possibilities){
     possibilitiesString = possibilitiesString.split('},').join('')
     possibilitiesString = possibilitiesString.split('}').join('')
     possibilitiesString = possibilitiesString.split(',').join('')
-
-    alert("the" + $("#tagFilter").val());
-    alert(possibilitiesString);
-    $("#tagPossibilities").val(possibilitiesString);
-    $("#tagPossibilities").val("the");
     $("#tagPossibilities").html(possibilitiesString);
-    alert("matt")
 
 }
 
