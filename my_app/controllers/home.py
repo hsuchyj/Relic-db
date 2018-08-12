@@ -1,5 +1,6 @@
 from flask import render_template, request, jsonify, abort
 from run_server import app
+from bson.objectid import ObjectId
 import my_app.controllers.dataAccess as dataAccess
 
 @app.route("/home")
@@ -20,6 +21,12 @@ def getTagsFromDB():
     tags = dataAccess.getTags(tag_level, search_text)
     return jsonify({'status': "success", "tags": tags})
 
+@app.route("/question")
+def testQues():
+        result = dataAccess.get_Questions("VPL", "function", 1,[ObjectId('5b7056d29541f93030da381c')])
+        print(result)
+        for item in result:
+                print(item)
 
 
 

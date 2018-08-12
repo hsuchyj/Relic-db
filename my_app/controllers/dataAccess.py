@@ -68,3 +68,17 @@ def getTags(tag_level, search_text):
        results = ["Error"]
     return list(filter(lambda text: search_text.lower() in text.lower(), results))
 
+def get_Questions(type, tag, difficulty, excludeIDs):
+    #type  = VPL or quiz
+    #tag = list
+    #difficulty = number
+    #list of excluded ids
+    client = MongoClient('localhost', 27017)
+    db = client['relic']
+    tags = db['tags']
+    questions = db['questions']
+    print("setup db")
+    #query for one tag
+    results = questions.find({'$and':[{'type':type}, {'tags':tag}, {'difficulty':difficulty}, {'_id':{'$nin':excludeIDs}}]})
+    return results
+
