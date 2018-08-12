@@ -55,7 +55,6 @@ function updateRestrictions(){
     tagTextLabel.appendChild(tagTextLabelText);
     tagTextCell.appendChild(tagTextLabel);
 
-
     //the remove button for each row will remove the in the restrictions and the table itself
     var removeButton = document.createElement("button");
     var removeButtonText = document.createTextNode("Remove");
@@ -69,7 +68,7 @@ function updateRestrictions(){
         updateDisplayedQuestions();
     });
     //add restriction
-    restrictions[rowIndex] = tagText;
+    restrictions[rowIndex] = {"tag":tagText, "num":tagDifficulty, "difficulty":tagDifficulty}
     removeButtonCell.appendChild(removeButton);
     updateDisplayedQuestions();
 };
