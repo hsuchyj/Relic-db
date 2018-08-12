@@ -11,7 +11,7 @@
     <script src="../static/js/createQuestionBoxes.js"></script>
     <script src= "../static/js/searchTags.js"></script>
     <script>
-        var restrictions = {"units":[], "unit_slos":[], "skills":[], "skill_slos":[]};
+        var restrictions = [];
     </script>
 </head>
 
@@ -43,7 +43,10 @@ Import
 <table class = "searchStyle tabPage search">
     <tr>
         <td>
-            <input id ="tagQuantity" type="text">
+            <input id ="tagQuantity" type="text" placeholder="Quantity of Questions">
+        </td>
+        <td>
+            <input id ="tagDifficulty" type="text" placeholder="Difficulty (0-10)">
         </td>
         <td>
 
@@ -55,7 +58,7 @@ Import
             </select>
         </td>
         <td>
-            <input id = "tagSearch" type = "text">
+            <input id = "tagSearch" type = "text" placeholder="Tag">
         </td>
         <td>
             <button id="addTag" onclick="updateRestrictions()" class="tabHover">Add Tag</button>

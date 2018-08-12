@@ -1,11 +1,12 @@
+
+
 function updateRestrictions(){
     var table = document.getElementById("tagRequirements");
     var tagLevel = $("#tagFilter").val();
     var tagText = $("#tagSearch").val();
     var tagQuantity = $("#tagQuantity").val()
+    var tagDifficulty = $("#tagDifficulty").val()
 
-     $("#tagSearch").val("");//reset text after submission. =)
-     $("#tagQuantity").val("")
     if(tagText.length == 0 ){//just a simple user case check to not add empty strings
         alert("check tag description");
         return;
@@ -14,25 +15,46 @@ function updateRestrictions(){
         alert("check quantity of questions");
         return;
     }
+    if(tagDifficulty.length == 0){
+        alert("check quantity of questions");
+        return;
+    }
+
+     $("#tagSearch").val("");//reset text after submission. =)
+     $("#tagQuantity").val("")
+     $("#tagDifficulty").val("")
+
     //Create the restriction table row
     var row = table.insertRow(-1);
     var rowIndex = row.rowIndex;
-    var cell1 = row.insertCell(0); //<label>units</label>
+
+    var tagQuantityCell = row.insertCell(0); //<label>quantity</label>
+    var tagDifficultyCell = row.insertCell(1);//<label>quantity</label>
+    var tagLevelCell = row.insertCell(2); //<label>units</label>
+    var tagLevelCell = row.insertCell(3);
+    var tagTextCell = row.insertCell(4); //<label>Introduction to Python</label>
+    var removeButtonCell = row.insertCell(5); //<button id="removeTag" onclick="deleteTags(\'' + this.parent  +'\')" class="tabHover">Remove</button>
+
+    var tagQuantityLabel = document.createElement("label");
+    var tagQuantityLabelText = document.createTextNode( tagQuantity + " Questions with ");
+    tagQuantityLabel.appendChild(tagQuantityLabelText);
+    tagQuantityCell.appendChild(tagQuantityLabel);
+
+    var tagDifficultyLabel = document.createElement("label");
+    var tagDifficultyLabelText = document.createTextNode( "Level " + tagDifficulty + " Difficulty");
+    tagDifficultyLabel.appendChild(tagDifficultyLabelText);
+    tagDifficultyCell.appendChild(tagDifficultyLabel);
+
     var tagLevelLabel = document.createElement("label");
-    var tagLevelLabelText = document.createTextNode(tagLevel);
+    var tagLevelLabelText = document.createTextNode("("+ tagLevel +")");
     tagLevelLabel.appendChild(tagLevelLabelText);
-    cell1.appendChild(tagLevelLabel);
-    var cell2 = row.insertCell(1); //<label>:</label></td>
-    var tagLevelLabel = document.createElement("label");
-    var tagLevelLabelText = document.createTextNode(":");
-    tagLevelLabel.appendChild(tagLevelLabelText);
-    cell2.appendChild(tagLevelLabel);
-    var cell3 = row.insertCell(2); //<label>Introduction to Python</label>
-    var tagLevelLabel = document.createElement("label");
-    var tagLevelLabelText = document.createTextNode(tagText);
-    tagLevelLabel.appendChild(tagLevelLabelText);
-    cell3.appendChild(tagLevelLabel);
-    var cell4 = row.insertCell(3); //<button id="removeTag" onclick="deleteTags(\'' + this.parent  +'\')" class="tabHover">Remove</button>
+    tagLevelCell.appendChild(tagLevelLabel);
+
+    var tagTextLabel = document.createElement("label");
+    var tagTextLabelText = document.createTextNode(tagText);
+    tagTextLabel.appendChild(tagTextLabelText);
+    tagTextCell.appendChild(tagTextLabel);
+
 
     //the remove button for each row will remove the in the restrictions and the table itself
     var removeButton = document.createElement("button");
@@ -41,21 +63,18 @@ function updateRestrictions(){
     removeButton.addEventListener('click', function(){
         var deletedRowIndex = this.parentNode.parentNode.rowIndex;//reference to row index needs to be computed on delete time.
         // it can't be stored on creation.
-        restrictions[tagLevel].splice(deletedRowIndex,1); //remove model
+        restrictions.splice(deletedRowIndex,1); //remove model
         table.deleteRow(deletedRowIndex); //remove view
-        table.refresh();
+        $("#tagRequirements").hide().show(0);//refresh table view.
         updateDisplayedQuestions();
     });
     //add restriction
-    restrictions[tagLevel][rowIndex] = tagText;
-    cell4.appendChild(removeButton);
+    restrictions[rowIndex] = tagText;
+    removeButtonCell.appendChild(removeButton);
     updateDisplayedQuestions();
 };
 
 function updateDisplayedQuestions(){
     //Hunter/Juan: insert code to refresh HTML/query database questions here
-    alert(restrictions["units"]);
-    alert(restrictions["unit_slos"]);
-    alert(restrictions["skills"]);
-    alert(restrictions["skills_slos"]);
+    alert(restrictions);
 }
