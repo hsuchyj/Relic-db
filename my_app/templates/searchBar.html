@@ -12,6 +12,8 @@
     <script src= "../static/js/searchTags.js"></script>
     <script>
         var restrictions = [];
+        var possibilities = {"units":[{"unit_name":"Simple Python Data","unit_SLO":"Write a script/program that asks a user for input values from the keyboard, performs a mathematical computation and displays the result to the screen.","topics":["operators","variables"],"skills":[{"skill_name":"algorithms","skill_slos":["write algorithm for solving simple mathematical problems","understand the difference between an algorithm and a program"]},{"skill_name":"operators","skill_slos":["evaluate expressions containing these operators","understand the difference between floating point and integer division","convert a mathematical formula into a Python expression"]}]}]};
+        $(document).ready(function(){updatePossibilities(possibilities)})
     </script>
 </head>
 
@@ -66,9 +68,8 @@ Import
     </tr>
 </table>
 
-<table class = "searchStyle tabPage search" id="tagRequirements">
-
-</table>
+<table class = "searchStyle tabPage search" id="tagRequirements"></table>
+<pre class = "searchStyle tabPage search" id="tagPossibilities"></pre>
 
 
 
@@ -96,5 +97,7 @@ $("#tagSearch").keyup(function() {
 
 <div id="importPage" class= "searchStyle tabPage import"><h1>import questions from canvas!</h1></div>
 </body>
+
+
 
 </html>

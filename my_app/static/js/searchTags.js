@@ -77,3 +77,24 @@ function updateDisplayedQuestions(){
     //Hunter/Juan: insert code to refresh HTML/query database questions here
     alert(restrictions);
 }
+function updatePossibilities(possibilities){
+
+    var possibilitiesString = JSON.stringify(possibilities, null, 5);//regex sucks too much =(
+    possibilitiesString = possibilitiesString.split('"').join('')
+    possibilitiesString = possibilitiesString.split('[').join('')
+    possibilitiesString = possibilitiesString.split('],').join('')
+    possibilitiesString = possibilitiesString.split(']').join('')
+    possibilitiesString = possibilitiesString.split('{').join('')
+    possibilitiesString = possibilitiesString.split('},').join('')
+    possibilitiesString = possibilitiesString.split('}').join('')
+    possibilitiesString = possibilitiesString.split(',').join('')
+
+    alert("the" + $("#tagFilter").val());
+    alert(possibilitiesString);
+    $("#tagPossibilities").val(possibilitiesString);
+    $("#tagPossibilities").val("the");
+    $("#tagPossibilities").html(possibilitiesString);
+    alert("matt")
+
+}
+
