@@ -45,7 +45,7 @@ Import
   <input type="submit" value = "Import">
 </form>
 
-<select name="searchStyle" class = "searchStyle tabPage search" id="searchFormat">
+<select name="searchStyle" class = "searchStyle tabPage search" id="searchFormat" onchange="updateTable()">
     <option value = "examTemplate" selected="selected">Create Exam Template</option>
     <option value  = "searchQuestions">Search Questions</option>
 </select>
@@ -73,6 +73,9 @@ Import
         </td>
         <td>
             <button id="addTag" onclick="updateRestrictions()" class="tabHover">Add Tag</button>
+        </td>
+        <td>
+            <button id="exportExam" onclick="exportTemplate()" class="tabHover">Export Template</button>
         </td>
     </tr>
 </table>
