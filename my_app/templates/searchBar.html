@@ -11,7 +11,12 @@
     <script src="../static/js/createQuestionBoxes.js"></script>
     <script src= "../static/js/searchTags.js"></script>
     <script>
-        var restrictions = {"units":[], "unit_slos":[], "skills":[], "skill_slos":[]};
+        var restrictions = [];
+        var questionRestrictions = []
+
+        var possibilities = {"units":[{"unit_name":"Simple Python Data","unit_SLO":"Write a script/program that asks a user for input values from the keyboard, performs a mathematical computation and displays the result to the screen.","topics":["operators","variables"],"skills":[{"skill_name":"algorithms","skill_slos":["write algorithm for solving simple mathematical problems","understand the difference between an algorithm and a program"]},{"skill_name":"operators","skill_slos":["evaluate expressions containing these operators","understand the difference between floating point and integer division","convert a mathematical formula into a Python expression"]}]}]};
+
+        $(document).ready(function(){updatePossibilities(possibilities)})
     </script>
 </head>
 
@@ -40,32 +45,44 @@ Import
   <input type="submit" value = "Import">
 </form>
 
+<select name="searchStyle" class = "searchStyle tabPage search" id="searchFormat" onchange="updateTable()">
+    <option value = "examTemplate" selected="selected">Create Exam Template</option>
+    <option value  = "searchQuestions">Search Questions</option>
+</select>
+
+
 <table class = "searchStyle tabPage search">
     <tr>
         <td>
-            <input id ="tagQuantity" type="text">
+            <input id ="tagQuantity" type="text" placeholder="Quantity of Questions">
+        </td>
+        <td>
+            <input id ="tagDifficulty" type="text" placeholder="Difficulty (0-10)">
         </td>
         <td>
 
             <select name="tagFilter" id="tagFilter">
                 <option value = "units" selected="selected">Unit</option>
-                <option value  = "unit_slos">Unit SLO</option>
-                <option value	= "skills">Skill</option>
+                <option value = "unit_slos">Unit SLO</option>
+                <option value = "skills">Skill</option>
                 <option value = "skill_slos">Skill SLO</option>
             </select>
         </td>
         <td>
-            <input id = "tagSearch" type = "text">
+            <input id = "tagSearch" type = "text" placeholder="Tag">
         </td>
         <td>
             <button id="addTag" onclick="updateRestrictions()" class="tabHover">Add Tag</button>
         </td>
+        <td>
+            <button id="exportExam" onclick="exportTemplate()" class="tabHover">Export Template</button>
+        </td>
     </tr>
 </table>
 
-<table class = "searchStyle tabPage search" id="tagRequirements">
-
-</table>
+<table class = "searchStyle tabPage search" id="tagRequirements"></table>
+<label class = "searchStyle tabPage search"><b> Course Curriculumn for Tag Auto-Complete</b></label>
+<pre class = "searchStyle tabPage search" id="tagPossibilities"></pre>
 
 
 
@@ -93,5 +110,7 @@ $("#tagSearch").keyup(function() {
 
 <div id="importPage" class= "searchStyle tabPage import"><h1>import questions from canvas!</h1></div>
 </body>
+
+
 
 </html>
