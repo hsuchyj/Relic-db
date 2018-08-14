@@ -33,6 +33,7 @@ pip-log.txt
 nosetests.xml
 coverage.xml
 workspace.xml
+vcs.xml
 
 # Translations
 *.mo

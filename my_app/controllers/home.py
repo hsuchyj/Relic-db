@@ -2,6 +2,7 @@ from flask import render_template, request, jsonify, abort
 from run_server import app
 from bson.objectid import ObjectId
 import my_app.controllers.dataAccess as dataAccess
+import my_app.controllers.reverse_indexing as reverse_indexing
 
 @app.route("/home")
 def mainPage():
@@ -32,10 +33,6 @@ def testQues():
             return arr
         except:
             pass
-
-#@app.errorhandler(500)
-#def internal_error(error):
-#    return "500 error"
 
 
 

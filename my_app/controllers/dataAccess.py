@@ -13,6 +13,7 @@ from pymongo import MongoClient
 import sys
 from tkinter import filedialog
 from tkinter import *
+import os
 
 def importQuestions():
     raise Exception("TODO Not fully implemented")
@@ -89,21 +90,26 @@ def tag_and_insert_q():
     questions = db['questions']
     #change this to user input
     root = Tk()
-    #root.filename = filedialog.askopenfilename(initialdir="/", title="Select file")
-    #xmlLoc = root.filename
-    xmlLoc = "C:\\Users\\OG AppleJacks\\Documents\\cisc106rework\\thisIsQti\\vpl.xml"
-    #add script to parse mbz and load xml
-    with open(xmlLoc, encoding='UTF-8') as fd:
-        doc = xmltodict.parse(fd.read())
+    root.filename = filedialog.askdirectory(initialdir="/", title="Select folder")
+    xmlLoc = root.filename
+    directory = os.fsencode(root.filename)
+    for file in os.listdir(directory):
+        with open(file, encoding='UTF-8') as fd:
+            doc = xmltodict.parse(fd.read())
+        questions.insert_one(doc)
 
+    #xmlLoc = "C:\\Users\\OG AppleJacks\\Documents\\cisc106rework\\thisIsQti\\vpl.xml"
+    #add script to parse mbz and load xml
+    #with open(xmlLoc, encoding='UTF-8') as fd:
+    #    doc = xmltodict.parse(fd.read())
+    #format only for moodle vpl.xml
     title = doc['activity']['vpl']['name']
     description = doc['activity']['vpl']['intro']
 
-    res = render_template('questionsDisplay.html',
-                          t=title,
-                          d=description)
     questions.insert_one(doc)
     print("question inserted into db")
+
+
 
 
 
