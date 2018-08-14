@@ -93,9 +93,28 @@ function updateRestrictions(){
 };
 
 function updateDisplayedQuestions(){
-    //Hunter/Juan: insert code to refresh HTML/query database questions here
+    alert("matt");
+     var isCreatingExamTemplate  = $("#searchFormat").val() == "examTemplate";
+     if(!isCreatingExamTemplate){
 
-    alert(restrictions);
+         alert("hi");
+          $.ajax({
+          url: "/question",
+          type: "POST",
+          data: JSON.stringify({"restrictions":questionRestrictions}),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function(result) {
+              //$("#tagSearch" ).autocomplete({source:result["tags"]});
+                alert("updatingDisplayedQuestions");
+              updateSearchedQuestions(result);
+
+          },
+          failure: function(errMsg) {
+                    alert(errMsg);
+                }
+        });
+     }
 };
 
 function updateTable(){
@@ -121,18 +140,43 @@ function updateTable(){
     });
 };
 function updatePossibilities(possibilities){
-    var possibilitiesString = JSON.stringify(possibilities, null, 5);//regex sucks too much =(
-    possibilitiesString = possibilitiesString.split('"').join('')
-    possibilitiesString = possibilitiesString.split('[').join('')
-    possibilitiesString = possibilitiesString.split('],').join('')
-    possibilitiesString = possibilitiesString.split(']').join('')
-    possibilitiesString = possibilitiesString.split('{').join('')
-    possibilitiesString = possibilitiesString.split('},').join('')
-    possibilitiesString = possibilitiesString.split('}').join('')
-    possibilitiesString = possibilitiesString.split(',').join('')
+    var possibilitiesString = removeJSONStuff(JSON.stringify(possibilities, null, 5));
     $("#tagPossibilities").html(possibilitiesString);
 };
 
+function updateSearchedQuestions(questions){
+    var questionsString = getQuestionJSONstring(questions)
+
+
+    $("#searchedQuestions").html(questionsString);
+    alert("hi");
+    console.log("updating search");
+    console.log(questionsString);
+};
+
+function getQuestionJSONstring(questions){
+    var result = "";
+    questions.forEach(function(question){
+        result += "Title:" + question["title"] + "\n";
+        result += "Description:" + question["description"] + "\n";
+        result += "Difficulty:" + question["difficulty"] + "\n";
+        result += "Type:" + question["type"] + "\n";
+        result += "Tags:" + JSON.stringify(question["tags"], null, 0) + "\n";
+        result += "\n";
+    });
+    return result;
+}
+function removeJSONStuff(aJSONString){//regex sucks too much =(
+    aJSONString = aJSONString.split('"').join('')
+    aJSONString = aJSONString.split('[').join('')
+    aJSONString = aJSONString.split('],').join('')
+    aJSONString = aJSONString.split(']').join('')
+    aJSONString = aJSONString.split('{').join('')
+    aJSONString = aJSONString.split('},').join('')
+    aJSONString = aJSONString.split('}').join('')
+    aJSONString = aJSONString.split(',').join('')
+    return aJSONString
+}
 function exportTemplate(){
     alert("TODO");
 }
