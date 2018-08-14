@@ -3,16 +3,17 @@ import json
 from ..config import settings
 from os.path import join
 from ..scripts import scripts
-
+from flask import render_template
 import xmltodict
 import pprint
 from io import open
 from bson import json_util
 from bson.json_util import dumps
 from pymongo import MongoClient
+import sys
 from tkinter import filedialog
 from tkinter import *
-import sys
+
 def importQuestions():
     raise Exception("TODO Not fully implemented")
     """
@@ -22,7 +23,7 @@ def importQuestions():
     # user selects file from gui
     # root = Tk()
     # root.filename = filedialog.askopenfilename(initialdir="/", title="Select file")
-    xmlLoc = "C:\\Users\\OG AppleJacks\\Documents\\cisc106rework\\staging-mattsap-quiz-export\\i682d359907261533e3507b8d0b191d73\\i682d359907261533e3507b8d0b191d73.xml"
+    xmlLoc = ""
     with open(xmlLoc, encoding='UTF-8') as fd:
         doc = xmltodict.parse(fd.read())
         jsonDoc = json_util.loads(json.dumps(doc))
@@ -77,8 +78,32 @@ def get_Questions(type, tag, difficulty, excludeIDs):
     db = client['relic']
     tags = db['tags']
     questions = db['questions']
-    print("setup db")
+    print("connected to db")
     #query for one tag
     results = questions.find({'$and':[{'type':type}, {'tags':tag}, {'difficulty':difficulty}, {'_id':{'$nin':excludeIDs}}]})
     return results
+
+def tag_and_insert_q():
+    client = MongoClient('localhost', 27017)
+    db = client['relic']
+    questions = db['questions']
+    #change this to user input
+    root = Tk()
+    #root.filename = filedialog.askopenfilename(initialdir="/", title="Select file")
+    #xmlLoc = root.filename
+    xmlLoc = "C:\\Users\\OG AppleJacks\\Documents\\cisc106rework\\thisIsQti\\vpl.xml"
+    #add script to parse mbz and load xml
+    with open(xmlLoc, encoding='UTF-8') as fd:
+        doc = xmltodict.parse(fd.read())
+
+    title = doc['activity']['vpl']['name']
+    description = doc['activity']['vpl']['intro']
+
+    res = render_template('questionsDisplay.html',
+                          t=title,
+                          d=description)
+    questions.insert_one(doc)
+    print("question inserted into db")
+
+
 

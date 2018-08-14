@@ -23,10 +23,19 @@ def getTagsFromDB():
 
 @app.route("/question")
 def testQues():
-        result = dataAccess.get_Questions("VPL", "function", 1,[ObjectId('5b7056d29541f93030da381c')])
-        print(result)
-        for item in result:
-                print(item)
+        try:
+            result = dataAccess.get_Questions("VPL", "function", 1,[ObjectId('5b7056d29541f93030da381c')])
+            arr = []
+            dataAccess.tag_and_insert_q()
+            for item in result:
+                arr.append(item)
+            return arr
+        except:
+            pass
+
+#@app.errorhandler(500)
+#def internal_error(error):
+#    return "500 error"
 
 
 
