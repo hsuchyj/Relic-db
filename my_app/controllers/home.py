@@ -6,7 +6,7 @@ import my_app.controllers.reverse_indexing as reverse_indexing
 import my_app.scripts.backup_extract as extract
 import my_app.config.settings as settings
 import my_app.scripts.create_exam as select
-
+from os.path import join
 @app.route("/home")
 def mainPage():
     return render_template("searchBar.html")
@@ -41,10 +41,12 @@ def export_exam():
     print("hello im hunter")
     if not request.json:
         abort(400)
-    print(request.json['restrictions'])
-    select.create_group_exams(request.json['restrictions'])
-    results = select.get_questions_with("vpl", "unit1", )
-    print(request.json['restrictions'])
+    #print(request.json['restrictions'])
+    select.create_group_exams(request.json)
+    #results = select.get_questions_with("vpl", "unit1", )
+    #print(request.json['restrictions'])
+    extract.make_tarfile(join(settings.MOODLE_EXTRACTION_PATH, "new-backup.mbz"),
+                          join(settings.MOODLE_EXTRACTION_PATH, "vpl"))
     return jsonify({'status': "success"})
 
 

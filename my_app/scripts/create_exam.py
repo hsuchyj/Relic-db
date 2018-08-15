@@ -104,7 +104,8 @@ def create_group_exams(result):
     '''
     #extract the vpl course backup into a structured folder
     #BE.extract_tar_file("backup-moodle.mbz","vpl")
-    
+    BE.extract_tar_file(settings.MOODLE_EXTRACTION_PATH + settings.MOODLE_EXTRACTION_NAME,
+                             settings.MOODLE_EXTRACTION_PATH + "vpl")
     groups_xml_file = join(settings.MOODLE_EXTRACTION_PATH, "vpl","groups.xml")
     
     group_list, staff = PG.get_groups(PG.get_root(groups_xml_file))

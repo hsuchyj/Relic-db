@@ -185,7 +185,7 @@ function exportTemplate(){
     $.ajax({
           url: "/export_exam",
           type: "POST",
-          data: JSON.stringify({"restrictions":restrictions}),
+          data: JSON.stringify({"tags":restrictions, "type":"vpl"}),
           contentType: "application/json; charset=utf-8",
           dataType: "json",
           success: function(result) {

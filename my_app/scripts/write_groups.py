@@ -29,7 +29,7 @@ def create_exam_group_tags(question_groups):
         # Write back to file
         #et.write('file.xml')
         et.write(module_xml_file)
-        compress.make_tarfile("new-backup.mbz", "vpl")
+        compress.make_tarfile(join(settings.MOODLE_EXTRACTION_PATH, "new-backup.mbz"), join(settings.MOODLE_EXTRACTION_PATH, "vpl"))
         
         print(my_tag_body)
         
