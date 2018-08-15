@@ -22,6 +22,7 @@ import my_app.scripts.write_groups as WG
 import my_app.config.settings as settings
 from os.path import join
 from random import sample
+from pymongo import MongoClient
 
 #reduces a full list of questions to contain only
 #a specified number of randomly selected questions
@@ -34,26 +35,35 @@ def randomize(questions, num):
 #gets a set of questions for an exam
 def get_questions_with(tag_name, exam_type, difficulty, num_questions, excluded_ids=[]):
     questions = []
-    
-    
+
+    client = MongoClient('localhost', 27017)
+    db = client['relic']
+    questions = db['questions']
+    list_of_questions = []
+    db_questions = questions.find({'tags':{'tag':tag_name}, 'difficulty':difficulty, 'moduleid':{'$nin':excluded_ids}})
+    for items in db_questions:
+        list_of_questions.append(items)
+    print(list_of_questions[0])
+    '''
     big_list_of_questions = [{"id": (2), "question": ("this question" ) , "tags":{"tag":  ["unit1"]}, "difficulty" : 1},
                              {"id": (3), "question": ("this question" ) , "tags":{"tag":  ["unit2"]}, "difficulty" : 1},
                              {"id": (4), "question": ("this question" ) , "tags":{"tag":  ["for loops in matlab"]}, "difficulty" : 1},
                              {"id": (5), "question": ("this question" ) , "tags":{"tag":  ["unit1","for loops in matlab"]}, "difficulty" : 1},
                              {"id": (7), "question": ("this question" ) , "tags":{"tag":  ["for loops in matlab"]}, "difficulty" : 1},
                              {"id": (8), "question": ("this question" ) , "tags":{"tag":  ["unit1","for loops in matlab"]}, "difficulty" : 1},]
-    
+    '''
     
     #database queries should be below. I have assumed that the database returns
     #some specific number of questions which we then randomize to keep only 'n' questions
+    '''
     if exam_type == "vpl":
 
         questions = list(filter(lambda x: x["id"] not in excluded_ids and tag_name in x["tags"]["tag"] and difficulty==x["difficulty"], big_list_of_questions))
 
     else:
         print("Non VPL questions unavailable for now!")
-    
-    randomized = randomize(questions, num_questions)
+    '''
+    randomized = randomize(list_of_questions, int(num_questions))
     
     return randomized
 
@@ -71,7 +81,7 @@ def create_exam(result):
     excluded_ids = []
     for index, tag in enumerate(tags):
         exam_questions_i = get_questions_with(tag["tag"], exam_type, tag["difficulty"], tag["num"], excluded_ids)
-        excluded_ids += [x["id"] for x in exam_questions_i]
+        excluded_ids += [x["activity"]["@moduleid"] for x in exam_questions_i]
         exam_questions += exam_questions_i
     
     print(excluded_ids)

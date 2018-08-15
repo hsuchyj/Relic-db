@@ -7,6 +7,7 @@ import my_app.scripts.backup_extract as extract
 import my_app.config.settings as settings
 import my_app.scripts.create_exam as select
 from os.path import join
+import ast
 @app.route("/home")
 def mainPage():
     return render_template("searchBar.html")
@@ -29,16 +30,17 @@ def getTagsFromDB():
 def testQues():
             extract.extract_tar_file(settings.MOODLE_EXTRACTION_PATH + settings.MOODLE_EXTRACTION_NAME,
                              settings.MOODLE_EXTRACTION_PATH + "vpl")
-            result = dataAccess.get_Questions("VPL", "function", 1,[ObjectId('5b7056d29541f93030da381c')])
+            #result = dataAccess.get_Questions("VPL", "function", 1,[ObjectId('5b7056d29541f93030da381c')])
             arr = []
             dataAccess.tag_and_insert_q()
-            for item in result:
-                arr.append(item)
+
+            #for item in result:
+            #    arr.append(item)
             return arr
 
 @app.route("/export_exam", methods = ['POST'])
 def export_exam():
-    print("hello im hunter")
+    print(request.json)
     if not request.json:
         abort(400)
     #print(request.json['restrictions'])

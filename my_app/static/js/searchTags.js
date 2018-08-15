@@ -105,7 +105,8 @@ function updateDisplayedQuestions(){
           $.ajax({
           url: "/question",
           type: "POST",
-          data: JSON.stringify({"restrictions":questionRestrictions}),
+          data: JSON.stringify({"tags":questionRestrictions,
+                                "type" : "vpl"}),
           contentType: "application/json; charset=utf-8",
           dataType: "json",
           success: function(result) {
@@ -150,7 +151,6 @@ function updatePossibilities(possibilities){
 
 function updateSearchedQuestions(questions){
     var questionsString = getQuestionJSONstring(questions)
-
 
     $("#searchedQuestions").html(questionsString);
     alert("hi");

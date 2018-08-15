@@ -13,8 +13,9 @@ from pymongo import MongoClient
 import sys
 from tkinter import filedialog
 from tkinter import *
-import os
+import os, ast
 import my_app.config.settings as settings
+import xml.etree.ElementTree as ET
 
 def importQuestions():
     raise Exception("TODO Not fully implemented")
@@ -81,6 +82,7 @@ def get_Questions(type, tag, difficulty, excludeIDs):
     tags = db['tags']
     questions = db['questions']
     print("connected to db")
+    results = ""
     return results
 
 def tag_and_insert_q():
@@ -93,13 +95,30 @@ def tag_and_insert_q():
     xmlLoc = root.filename
     directory = root.filename
     for sub_folder in os.listdir(directory):
-        for file in os.listdir(join(directory,sub_folder)):
-            print(file)
-            if(file == "vpl.xml"):
-                fileDir = join(directory, sub_folder, file)
-                with open(fileDir, encoding='UTF-8') as fd:
-                    doc = xmltodict.parse(fd.read())
-                    questions.insert_one(doc)
+            vpl = join(settings.MOODLE_EXTRACTION_PATH,"vpl","activities",sub_folder, "vpl.xml")
+            module = join(settings.MOODLE_EXTRACTION_PATH,"vpl","activities",sub_folder, "module.xml")
+
+            tags = []
+            difficulty = ""
+            doc = {}
+
+            with open(vpl, encoding='UTF-8') as fd:
+                doc = xmltodict.parse(fd.read())
+
+            tree = ET.parse(module)
+            root = tree.getroot()
+
+            for tag in root.findall('./tags/tag'):
+                name = tag.find('name').text
+                print("thi is our name " + name)
+                if "difficulty-"in name:
+                    difficulty = name
+                else:
+                    tags.append({"tag": name})
+            doc.update({'tags': tags})
+            doc.update({'difficulty': difficulty})
+
+            questions.insert_one(doc)
 
 
     #xmlLoc = "C:\\Users\\OG AppleJacks\\Documents\\cisc106rework\\thisIsQti\\vpl.xml"
@@ -110,7 +129,6 @@ def tag_and_insert_q():
     title = doc['activity']['vpl']['name']
     description = doc['activity']['vpl']['intro']
 
-    questions.insert_one(doc)
     print("question inserted into db")
 
 
