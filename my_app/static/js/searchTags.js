@@ -13,6 +13,10 @@ function addRestriction(table, tagLevel, tagText, tagQuantity, tagDifficulty, is
     if(!isCreatingExamTemplate){
         tagQuantityCell.style.visibility = "hidden";
     }
+    else
+    {
+        tagQuantityCell.style.visibility = "block";
+    }
 
     var tagQuantityLabel = document.createElement("label");
     var tagQuantityLabelText = document.createTextNode( tagQuantity + " Questions with ");
@@ -178,5 +182,18 @@ function removeJSONStuff(aJSONString){//regex sucks too much =(
     return aJSONString
 }
 function exportTemplate(){
-    alert("TODO");
+    $.ajax({
+          url: "/export_exam",
+          type: "POST",
+          data: JSON.stringify({"restrictions":restrictions}),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function(result) {
+                alert("exported data");
+
+          },
+          failure: function(errMsg) {
+                    alert(errMsg);
+                }
+        });
 }

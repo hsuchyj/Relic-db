@@ -16,10 +16,12 @@ get_questions_with(tag_name, exam_type, difficulty, num_questions, excluded_ids=
 """
 
 import pprint, json, ast
+import my_app.scripts.backup_extract as BE
+import my_app.scripts.parse_groups as PG
+import my_app.scripts.write_groups as WG
+import my_app.config.settings as settings
+from os.path import join
 from random import sample
-import backup_extract as BE
-import parse_groups as PG
-import write_groups as WG
 
 #reduces a full list of questions to contain only
 #a specified number of randomly selected questions
@@ -78,16 +80,17 @@ def create_exam(result):
 
 #print XML tags for group specification in module.xml file
 
-def create_group_exams():
+def create_group_exams(result):
     
     #Checking the functions using the JSON representation
-    #of a user request   
+    #of a user request
+    '''
     result = {
         "tags":[{"tag":"unit1", "num": 2, "difficulty": 1}, 
               {"tag":"for loops in matlab", "num": 1, "difficulty": 1}],    
         "type" : "vpl"
         }
-    
+    '''
     result_json = json.dumps(result)
     exams = []
     question_ids = []
@@ -100,9 +103,9 @@ def create_group_exams():
     code for extracting grousp from MBZ file
     '''
     #extract the vpl course backup into a structured folder
-    BE.extract_tar_file("backup-moodle.mbz","vpl")
+    #BE.extract_tar_file("backup-moodle.mbz","vpl")
     
-    groups_xml_file = "vpl/groups.xml"
+    groups_xml_file = join(settings.MOODLE_EXTRACTION_PATH, "vpl","groups.xml")
     
     group_list, staff = PG.get_groups(PG.get_root(groups_xml_file))
     
@@ -126,8 +129,7 @@ def create_group_exams():
         question_groups.update({items: ["{}".format(group_list[exam_id]) for exam_id,value1 in enumerate(question_ids) for position_id,value2 in enumerate(value1) if value2==items]})
     
     pprint.pprint(question_groups)
-    WG.staff_tags('vpl/activities', staff)
+    WG.staff_tags(join(settings.MOODLE_EXTRACTION_PATH,'vpl','activities'), staff)
     WG.create_exam_group_tags(question_groups)
     
-    
-create_group_exams()
+

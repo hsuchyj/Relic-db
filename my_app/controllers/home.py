@@ -3,6 +3,9 @@ from run_server import app
 from bson.objectid import ObjectId
 import my_app.controllers.dataAccess as dataAccess
 import my_app.controllers.reverse_indexing as reverse_indexing
+import my_app.scripts.backup_extract as extract
+import my_app.config.settings as settings
+import my_app.scripts.create_exam as select
 
 @app.route("/home")
 def mainPage():
@@ -22,17 +25,27 @@ def getTagsFromDB():
     tags = dataAccess.getTags(tag_level, search_text)
     return jsonify({'status': "success", "tags": tags})
 
-@app.route("/question")
+@app.route("/question", methods= ["POST"])
 def testQues():
-        try:
+            extract.extract_tar_file(settings.MOODLE_EXTRACTION_PATH + settings.MOODLE_EXTRACTION_NAME,
+                             settings.MOODLE_EXTRACTION_PATH + "vpl")
             result = dataAccess.get_Questions("VPL", "function", 1,[ObjectId('5b7056d29541f93030da381c')])
             arr = []
             dataAccess.tag_and_insert_q()
             for item in result:
                 arr.append(item)
             return arr
-        except:
-            pass
+
+@app.route("/export_exam", methods = ['POST'])
+def export_exam():
+    print("hello im hunter")
+    if not request.json:
+        abort(400)
+    print(request.json['restrictions'])
+    select.create_group_exams(request.json['restrictions'])
+    results = select.get_questions_with("vpl", "unit1", )
+    print(request.json['restrictions'])
+    return jsonify({'status': "success"})
 
 
 

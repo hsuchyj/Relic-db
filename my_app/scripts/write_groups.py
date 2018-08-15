@@ -1,6 +1,9 @@
 #to write group tags to modules.xml file
 import xml.etree.ElementTree as ET
 import ast, os
+import my_app.config.settings as settings
+import my_app.scripts.backup_extract as compress
+from os.path import join
 
 def create_exam_group_tags(question_groups):
     for items in question_groups.items():
@@ -14,7 +17,7 @@ def create_exam_group_tags(question_groups):
         #my_tag = ("Question " + str(items[0]) + ': ' + '<availability>{"op":"|",' + '"c":{}'.format(str(group_id_list).replace("'", '"')) + ',"show":false}</availability>')
         my_tag_body = '{"op":"|",' + '"c":{}'.format(str(group_id_list).replace("'", '"')) + ',"show":false}'
         
-        module_xml_file = "vpl/activities/vpl_" + str(items[0]) + "/module.xml"
+        module_xml_file = join(settings.MOODLE_EXTRACTION_PATH,"vpl","activities","vpl_"+str(items[0]), "module.xml")
         
         et = ET.parse(module_xml_file)
         
@@ -25,9 +28,10 @@ def create_exam_group_tags(question_groups):
 
         # Write back to file
         #et.write('file.xml')
-        et.write(module_xml_file)    
+        et.write(module_xml_file)
+        compress.make_tarfile("new-backup.mbz", "vpl")
         
-        #print(my_tag_body)
+        print(my_tag_body)
         
 def staff_tags(path, staff):
     
@@ -43,7 +47,7 @@ def staff_tags(path, staff):
             #my_tag = ("Question " + str(items[0]) + ': ' + '<availability>{"op":"|",' + '"c":{}'.format(str(group_id_list).replace("'", '"')) + ',"show":false}</availability>')
             my_tag_body = '{"op":"|",' + '"c":{}'.format(str(group_id_list).replace("'", '"')) + ',"show":false}'
             
-            module_xml_file = "vpl/activities/" + str(sub_dir) + "/module.xml"
+            module_xml_file = join(settings.MOODLE_EXTRACTION_PATH, "vpl","activities" , str(sub_dir) , "module.xml")
             
             et = ET.parse(module_xml_file)
             

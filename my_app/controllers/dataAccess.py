@@ -14,6 +14,7 @@ import sys
 from tkinter import filedialog
 from tkinter import *
 import os
+import my_app.config.settings as settings
 
 def importQuestions():
     raise Exception("TODO Not fully implemented")
@@ -80,8 +81,6 @@ def get_Questions(type, tag, difficulty, excludeIDs):
     tags = db['tags']
     questions = db['questions']
     print("connected to db")
-    #query for one tag
-    results = questions.find({'$and':[{'type':type}, {'tags':tag}, {'difficulty':difficulty}, {'_id':{'$nin':excludeIDs}}]})
     return results
 
 def tag_and_insert_q():
@@ -90,13 +89,18 @@ def tag_and_insert_q():
     questions = db['questions']
     #change this to user input
     root = Tk()
-    root.filename = filedialog.askdirectory(initialdir="/", title="Select folder")
+    root.filename = join(settings.MOODLE_EXTRACTION_PATH ,"vpl","activities")
     xmlLoc = root.filename
-    directory = os.fsencode(root.filename)
-    for file in os.listdir(directory):
-        with open(file, encoding='UTF-8') as fd:
-            doc = xmltodict.parse(fd.read())
-        questions.insert_one(doc)
+    directory = root.filename
+    for sub_folder in os.listdir(directory):
+        for file in os.listdir(join(directory,sub_folder)):
+            print(file)
+            if(file == "vpl.xml"):
+                fileDir = join(directory, sub_folder, file)
+                with open(fileDir, encoding='UTF-8') as fd:
+                    doc = xmltodict.parse(fd.read())
+                    questions.insert_one(doc)
+
 
     #xmlLoc = "C:\\Users\\OG AppleJacks\\Documents\\cisc106rework\\thisIsQti\\vpl.xml"
     #add script to parse mbz and load xml
