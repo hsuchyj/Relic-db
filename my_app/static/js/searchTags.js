@@ -103,7 +103,7 @@ function updateDisplayedQuestions(){
 
          alert("hi");
           $.ajax({
-          url: "/question",
+          url: "/questionsdisplayed",
           type: "POST",
           data: JSON.stringify({"tags":questionRestrictions,
                                 "type" : "vpl"}),

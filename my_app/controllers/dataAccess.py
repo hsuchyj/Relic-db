@@ -72,6 +72,35 @@ def getTags(tag_level, search_text):
        results = ["Error"]
     return list(filter(lambda text: search_text.lower() in text.lower(), results))
 
+def get_all_questions_with(restrictions):
+    exam_questions = []  # will be a list of lists
+
+    result_dict = json.loads(restrictions)
+
+    exam_type = result_dict["type"]
+
+    tags = result_dict["tags"]
+
+    client = MongoClient('localhost', 27017)
+    db = client['relic']
+    questions = db['questions']
+
+    excluded_ids = []
+    for index, tag in enumerate(tags):
+        list_of_questions = []
+        #TODO NEED TO INCLUDE exam_type when searching to have VPL or canvas questions returned.
+        db_questions = questions.find(
+            {'tags': {'tag': tag["tag"]}, 'difficulty': tag["difficulty"], 'moduleid': {'$nin': excluded_ids}})
+        for items in db_questions:
+            list_of_questions.append(items)
+
+        exam_questions_i = list_of_questions
+        excluded_ids += [x["activity"]["@moduleid"] for x in exam_questions_i]
+        exam_questions += exam_questions_i
+
+    return exam_questions
+
+
 def get_Questions(type, tag, difficulty, excludeIDs):
     #type  = VPL or quiz
     #tag = list

@@ -40,6 +40,7 @@ def get_questions_with(tag_name, exam_type, difficulty, num_questions, excluded_
     db = client['relic']
     questions = db['questions']
     list_of_questions = []
+    # TODO NEED TO INCLUDE exam_type when searching to have VPL or canvas questions returned.
     db_questions = questions.find({'tags':{'tag':tag_name}, 'difficulty':difficulty, 'moduleid':{'$nin':excluded_ids}})
     for items in db_questions:
         list_of_questions.append(items)

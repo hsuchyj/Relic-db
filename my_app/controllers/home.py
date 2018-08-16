@@ -38,6 +38,12 @@ def testQues():
             #    arr.append(item)
             return arr
 
+@app.route("/questionsdisplayed", methods = ['POST'])
+def retrieve_questions():
+    if not request.json:
+        abort(400)
+    return dataAccess.get_all_questions_with(request.json)
+
 @app.route("/export_exam", methods = ['POST'])
 def export_exam():
     print(request.json)
