@@ -9,7 +9,7 @@ function addRestriction(table, tagLevel, tagText, tagQuantity, tagDifficulty, is
     var tagLevelCell = row.insertCell(3);
     var tagTextCell = row.insertCell(4); //<label>Introduction to Python</label>
     var removeButtonCell = row.insertCell(5); //<button id="removeTag" onclick="deleteTags(\'' + this.parent  +'\')" class="tabHover">Remove</button>
-
+    /*
     if(!isCreatingExamTemplate){
         tagQuantityCell.style.visibility = "hidden";
     }
@@ -17,7 +17,7 @@ function addRestriction(table, tagLevel, tagText, tagQuantity, tagDifficulty, is
     {
         tagQuantityCell.style.visibility = "block";
     }
-
+    */
     var tagQuantityLabel = document.createElement("label");
     var tagQuantityLabelText = document.createTextNode( tagQuantity + " Questions with ");
     tagQuantityLabel.appendChild(tagQuantityLabelText);
@@ -58,10 +58,10 @@ function addRestriction(table, tagLevel, tagText, tagQuantity, tagDifficulty, is
     removeButtonCell.appendChild(removeButton);
 
     if(isCreatingExamTemplate){
-        restrictions[rowIndex] = {"tag":tagText, "num":tagQuantity, "tagLevel":tagLevel, "difficulty":tagDifficulty}
+        restrictions[rowIndex] = {"tag":tagText, "num":tagQuantity, "difficulty":tagDifficulty}
     }
     else{
-        questionRestrictions[rowIndex] = {"tag":tagText, "tagLevel":tagLevel, "difficulty":tagDifficulty}
+        questionRestrictions[rowIndex] = {"tag":tagText, "difficulty":tagDifficulty}
     }
 };
 
@@ -125,16 +125,20 @@ function updateDisplayedQuestions(){
 function updateTable(){
 
     $("#tagRequirements tr").remove();
-    $("#tagQuantity").hide();
     var table = document.getElementById("tagRequirements");
     var isCreatingExamTemplate  = $("#searchFormat").val() == "examTemplate";
     alert(isCreatingExamTemplate);
     alert($("#searchFormat").val());
     var data = questionRestrictions;
-    if(isCreatingExamTemplate){
+    if(isCreatingExamTemplate) {
         data = restrictions;
-
+        $("#tagQuantity").show();
     }
+    else
+    {
+        $("#tagQuantity").hide();
+    }
+
 
     data.forEach(function(restriction){
         var tagQuantity = 0
@@ -190,6 +194,21 @@ function exportTemplate(){
           dataType: "json",
           success: function(result) {
                 alert("exported data");
+
+          },
+          failure: function(errMsg) {
+                    alert(errMsg);
+                }
+        });
+}
+
+function importQuestionsIntoServer()
+{
+    $.ajax({
+          url: "/question",
+          type: "POST",
+          success: function(result) {
+                alert("imported questions");
 
           },
           failure: function(errMsg) {

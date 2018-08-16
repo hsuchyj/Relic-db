@@ -31,22 +31,19 @@ def testQues():
             extract.extract_tar_file(settings.MOODLE_EXTRACTION_PATH + settings.MOODLE_EXTRACTION_NAME,
                              settings.MOODLE_EXTRACTION_PATH + "vpl")
             #result = dataAccess.get_Questions("VPL", "function", 1,[ObjectId('5b7056d29541f93030da381c')])
-            arr = []
             dataAccess.tag_and_insert_q()
-
-            #for item in result:
-            #    arr.append(item)
-            return arr
+            return jsonify({'status': "success"})
 
 @app.route("/questionsdisplayed", methods = ['POST'])
 def retrieve_questions():
     if not request.json:
         abort(400)
-    return dataAccess.get_all_questions_with(request.json)
+    print(request.json)
+    return jsonify(dataAccess.get_all_questions_with(request.json))
 
 @app.route("/export_exam", methods = ['POST'])
 def export_exam():
-    print(request.json)
+    #print(request.json)
     if not request.json:
         abort(400)
     #print(request.json['restrictions'])
