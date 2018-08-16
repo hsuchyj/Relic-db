@@ -193,13 +193,16 @@ function exportTemplate(){
           contentType: "application/json; charset=utf-8",
           dataType: "json",
           success: function(result) {
-                alert("exported data");
+                //TODO dont do it this way, please fix below
+                $('#downloadLink').attr('style', 'visibility:visible; display:block');
+                $('#downloadLink').attr('href', result['path']);
 
           },
           failure: function(errMsg) {
                     alert(errMsg);
                 }
         });
+
 }
 
 function importQuestionsIntoServer()

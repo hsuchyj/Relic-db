@@ -15,4 +15,3 @@ if __name__ == "__main__":
     app.run(debug=app.debug, port=5001)
     setup_logging(logging_path=settings.LOGGING_PATH,
                   level=settings.LOGGING_LEVEL)
-    

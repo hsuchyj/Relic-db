@@ -1,4 +1,4 @@
-from flask import render_template, request, jsonify, abort
+from flask import render_template, request, jsonify, abort, send_from_directory
 from run_server import app
 from bson.objectid import ObjectId
 import my_app.controllers.dataAccess as dataAccess
@@ -52,9 +52,12 @@ def export_exam():
     #print(request.json['restrictions'])
     extract.make_tarfile(join(settings.MOODLE_EXTRACTION_PATH, "new-backup.mbz"),
                           join(settings.MOODLE_EXTRACTION_PATH, "vpl"))
+
     return jsonify({'status': "success"})
 
-
+@app.route("/return-files/")
+def return_files():
+    return send_from_directory(settings.MOODLE_EXTRACTION_PATH,"new-backup.mbz",as_attachment = True)
 
 def setup_logging(logging_path, level):
     '''Setups logging in app'''
